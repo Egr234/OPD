@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projectmanagement.controller.MainController">
+
+    <!-- Верхняя панель -->
+    <top>
+        <VBox spacing="0">
+            <HBox style="-fx-background-color: #2c3e50;" alignment="CENTER_LEFT"
+                  spacing="10">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+
+                <Label text="📋 Project Management System"
+                       styleClass="header-label"
+                       textFill="white">
+                    <font>
+                        <Font name="System Bold" size="20" />
+                    </font>
+                </Label>
+                <Separator orientation="VERTICAL" prefHeight="30" />
+                <Label text="Управление проектами"
+                       styleClass="subheader-label"
+                       textFill="#ecf0f1" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Левая боковая панель -->
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #34495e;"
+              prefWidth="200" minWidth="200">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+
+            <Label text="НАВИГАЦИЯ" styleClass="menu-label" />
+
+            <Button fx:id="btnDashboard" text="📊 Дашборд"
+                    onAction="#loadDashboard"
+                    styleClass="menu-btn"
+                    maxWidth="Infinity" />
+
+            <Button fx:id="btnProjects" text="📁 Проекты"
+                    onAction="#loadProjects"
+                    styleClass="menu-btn"
+                    maxWidth="Infinity" />
+
+            <Button fx:id="btnTasks" text="✅ Задачи"
+                    onAction="#loadTasks"
+                    styleClass="menu-btn"
+                    maxWidth="Infinity" />
+
+            <Button fx:id="btnAssignees" text="👥 Команда"
+                    onAction="#loadAssignees"
+                    styleClass="menu-btn"
+                    maxWidth="Infinity" />
+
+            <Button fx:id="btnReports" text="📈 Отчеты"
+                    onAction="#loadReports"
+                    styleClass="menu-btn"
+                    maxWidth="Infinity" />
+
+            <VBox VBox.vgrow="ALWAYS" />
+
+        </VBox>
+    </left>
+
+    <!-- Центральная область (динамически загружается) -->
+    <center>
+        <StackPane fx:id="mainPane">
+            <Label text="Добро пожаловать в систему управления проектами!"
+                   styleClass="welcome-label" />
+        </StackPane>
+    </center>
+
+    <!-- Нижняя панель -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #ecf0f1;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </HBox>
+    </bottom>
+
+</BorderPane>

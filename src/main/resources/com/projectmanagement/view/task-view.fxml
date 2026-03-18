@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<GridPane xmlns="http://javafx.com/javafx/17.0.2"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.projectmanagement.controller.TaskController"
+          hgap="15" vgap="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="70" />
+        <ColumnConstraints percentWidth="30" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="70" />
+        <RowConstraints percentHeight="30" />
+    </rowConstraints>
+
+    <!-- Левая часть: Список задач с фильтрами -->
+    <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="✅ Управление задачами" styleClass="header-label">
+                <font>
+                    <Font name="System Bold" size="18" />
+                </font>
+            </Label>
+            <Label fx:id="lblTaskStats" text=""
+                   style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="🔄 Обновить" onAction="#handleRefresh"
+                    styleClass="secondary-btn" />
+        </HBox>
+
+        <!-- Фильтры -->
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25" />
+                <ColumnConstraints percentWidth="25" />
+                <ColumnConstraints percentWidth="25" />
+                <ColumnConstraints percentWidth="25" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+
+            <Label text="Проект:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ComboBox fx:id="cbProjectFilter"
+                      GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Приоритет:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <ComboBox fx:id="cbPriorityFilter"
+                      GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+            <Label text="Статус:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbStatusFilter"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Исполнитель:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbAssigneeFilter"
+                      GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        </GridPane>
+
+        <!-- Таблица задач -->
+        <TableView fx:id="taskTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colTaskId" text="ID" prefWidth="50" />
+                <TableColumn fx:id="colTaskName" text="Задача" prefWidth="200" />
+                <TableColumn fx:id="colProjectName" text="Проект" prefWidth="150" />
+                <TableColumn fx:id="colPriority" text="Приоритет" prefWidth="100" />
+                <TableColumn fx:id="colStatus" text="Статус" prefWidth="100" />
+                <TableColumn fx:id="colAssignee" text="Исполнитель" prefWidth="150" />
+                <TableColumn fx:id="colDeadline" text="Дедлайн" prefWidth="100" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+
+    <!-- Правая часть: Форма задачи и быстрые действия -->
+    <VBox spacing="15" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2">
+        <!-- Форма задачи -->
+        <VBox spacing="15" styleClass="form-panel">
+            <Label text="✏️ Форма задачи" styleClass="header-label">
+                <font>
+                    <Font name="System Bold" size="16" />
+                </font>
+            </Label>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="40" />
+                    <ColumnConstraints percentWidth="60" />
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+
+                <!-- Проект -->
+                <Label text="Проект*:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <ComboBox fx:id="cbProject"
+                          GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <!-- Название задачи -->
+                <Label text="Задача*:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="tfTaskName"
+                           promptText="Введите название задачи"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <!-- Исполнитель -->
+                <Label text="Исполнитель*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cbAssignee"
+                          GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <!-- Приоритет -->
+                <Label text="Приоритет:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <ComboBox fx:id="cbPriority"
+                          GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                <!-- Статус -->
+                <Label text="Статус:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <ComboBox fx:id="cbStatus"
+                          GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <!-- Планируемые часы -->
+                <Label text="Планируемые часы:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                <TextField fx:id="tfEstimatedHours"
+                           promptText="0"
+                           GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                <!-- Фактические часы -->
+                <Label text="Фактические часы:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                <TextField fx:id="tfActualHours"
+                           promptText="0"
+                           GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                <!-- Дедлайн -->
+                <Label text="Дедлайн:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                <DatePicker fx:id="dpDeadline"
+                            promptText="дд.мм.гггг"
+                            GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            </GridPane>
+
+            <!-- Описание -->
+            <Label text="Описание:" />
+            <TextArea fx:id="taTaskDescription"
+                      promptText="Описание задачи..."
+                      prefRowCount="3" />
+
+            <!-- Кнопки действий -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnAddTask" text="➕ Добавить"
+                        onAction="#handleAddTask" styleClass="primary-btn" />
+                <Button fx:id="btnUpdateTask" text="✏️ Обновить"
+                        onAction="#handleUpdateTask" styleClass="secondary-btn"
+                        disable="true" />
+                <Button fx:id="btnDeleteTask" text="🗑️ Удалить"
+                        onAction="#handleDeleteTask" styleClass="danger-btn"
+                        disable="true" />
+                <Button fx:id="btnClearTask" text="❌ Очистить"
+                        onAction="#handleClearForm" styleClass="secondary-btn" />
+            </HBox>
+        </VBox>
+
+        <!-- Быстрые действия -->
+        <VBox spacing="10" styleClass="form-panel">
+            <Label text="⚡ Быстрые действия" styleClass="header-label">
+                <font>
+                    <Font name="System Bold" size="16" />
+                </font>
+            </Label>
+
+            <VBox spacing="5">
+                <Button fx:id="btnMarkComplete" text="✅ Отметить как завершенную"
+                        onAction="#handleMarkComplete" styleClass="primary-btn"
+                        disable="true" />
+                <Button fx:id="btnMarkInProgress" text="🔄 Перевести в работу"
+                        onAction="#handleMarkInProgress" styleClass="secondary-btn"
+                        disable="true" />
+            </VBox>
+        </VBox>
+    </VBox>
+
+</GridPane>
