@@ -70,8 +70,7 @@ public class DatabaseManager {
             serverConn = DriverManager.getConnection(fullUrl, user, password);
             stmt = serverConn.createStatement();
 
-            // УДАЛИТЕ СТАРЫЕ ТАБЛИЦЫ ЕСЛИ ОНИ СУЩЕСТВУЮТ
-            // УДАЛИТЕ СТАРЫЕ ТАБЛИЦЫ ЕСЛИ ОНИ СУЩЕСТВУЮТ
+            // Удаление старых таблиц если есть
             try {
                 stmt.executeUpdate("DROP TABLE IF EXISTS task_comments");
                 stmt.executeUpdate("DROP TABLE IF EXISTS tasks");
@@ -82,7 +81,6 @@ public class DatabaseManager {
                 System.out.println("ℹ️  Старых таблиц не существует или их не удалось удалить");
             }
 
-            // СОЗДАЙТЕ ТАБЛИЦЫ С ПРАВИЛЬНОЙ СТРУКТУРОЙ
             createTables(stmt);
             insertTestData(stmt);
 
